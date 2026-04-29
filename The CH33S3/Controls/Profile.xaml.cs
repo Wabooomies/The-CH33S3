@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using The_CH33S3.ViewModels;
 
-namespace The_CH33S3.Views
+namespace The_CH33S3.Controls
 {
     /// <summary>
-    /// Interaction logic for LogIn.xaml
+    /// Interaction logic for Profile.xaml
     /// </summary>
-    public partial class LogIn : UserControl
+    public partial class Profile : UserControl
     {
-        public LogIn()
+        public Profile()
         {
             InitializeComponent();
-        }
-
-        private async void LogIn_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is LogInViewModel vm)
-                await vm.LogIn(PasswordInput.Password);
         }
     }
 }

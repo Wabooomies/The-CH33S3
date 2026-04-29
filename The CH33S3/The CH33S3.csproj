@@ -10,15 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Controls\Images\cheese_icon.png" />
+    <None Remove="Images\Cheese-Graphics-64558594-2-580x387.png" />
+    <None Remove="Images\cheese_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Controls\Images\cheese_icon.png" />
+    <Resource Include="Images\Cheese-Graphics-64558594-2-580x387.png" />
+    <Resource Include="Images\cheese_icon.png" />
   </ItemGroup>
 
 </Project>

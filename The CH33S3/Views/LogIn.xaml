@@ -11,9 +11,63 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
 
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Text="Welcome Back!" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="White" 
+                           Margin="0,20,0,10" 
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="Please log in to your account" 
+                           FontSize="14" 
+                           Foreground="White" 
+                           Margin="0,0,0,20" 
+                           HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Vertical"
+                            Margin="50,0,50,50">
+                    <TextBlock Text="Username" 
+                               FontSize="12"
+                               MaxWidth="500"
+                               Foreground="White" 
+                               Margin="0,10,0,5"/>
+                    <TextBox x:Name="UsernameTextBox" 
+                             Style="{DynamicResource StandardTextBoxStyle}" 
+                             Text="{Binding Username}"
+                             MaxWidth="500"
+                             FontSize="12"
+                             Margin="0,0,0,10"
+                             Padding="2.5"/>
+                    <TextBlock Text="Password" 
+                               MaxWidth="500"
+                               FontSize="12" 
+                               Foreground="White" 
+                               Margin="0,10,0,5"/>
+                    <PasswordBox Template="{DynamicResource StandardPasswordBoxStyle}" x:Name="PasswordInput" 
+                                 Foreground="White"
+                                 FontSize="12"
+                                 MaxWidth="500"
+                                 Margin="0,0,0,20"
+                                 Padding="2.5"/>
+                    <Button Style="{DynamicResource StandardButtonStyle}" Content="Log In" 
+                            FontWeight="Bold"
+                            FontSize="16"
+                            MaxWidth="500"
+                            Click="LogIn_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <Image Grid.Column="1"
+                   MinHeight="100"
+                   MinWidth="100"
+                   MaxHeight="600"
+                   MaxWidth="600"
+                   Margin="50"
+                   Source="pack://application:,,,/Images/cheese_icon.png"
+                   Stretch="Uniform">
+            </Image>
 
         </Grid>
     </Grid>

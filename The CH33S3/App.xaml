@@ -11,9 +11,17 @@
                 <v:LogIn />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+                <v:Dashboard />
+            </DataTemplate>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/TopBarIconResource.xaml"/>
+                <ResourceDictionary Source="Themes/StandardButtonResource.xaml"/>
+                <ResourceDictionary Source="Themes/StandardTextBoxResource.xaml"/>
+                <ResourceDictionary Source="Themes/StandardPasswordBoxResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
