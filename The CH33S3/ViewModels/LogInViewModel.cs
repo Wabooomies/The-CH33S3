@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using The_CH33S3.Models;
 
 namespace The_CH33S3.ViewModels
 {
@@ -28,44 +29,41 @@ namespace The_CH33S3.ViewModels
 
         public async Task LogIn(string password)
         {
-
             try
             {
+                UserModel? user = null;
+
                 _password = password;
 
-                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                if (String.IsNullOrEmpty(Username) || string.IsNullOrEmpty(_password))
                 {
-                    await connection.OpenAsync();
-
-                    using (SqlCommand command = new SqlCommand("sp_GetPasswordByUser", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@Username", Username);
-
-                        var result = await command.ExecuteScalarAsync();
-
-                        if (result is not string dbPassword || string.IsNullOrEmpty(dbPassword))
-                        {
-                            MessageBox.Show("User not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-
-                        if (dbPassword == password)
-                        {
-                            MessageBox.Show($"Login successful! Welcome, {Username}.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            var app = (Application.Current as App);
-                            app._containerViewModel.CurrentViewModel = new DashboardViewModel();
-                            return;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Incorrect password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                    }
+                    MessageBox.Show("Please enter both username and password.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
                 }
+
+                var result = await DatabaseHelper.FindUser(Username, _password);
+                if (result == null)
+                {
+                    MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                user = new UserModel(Username);
+
+                var app = Application.Current as App;
+                if (app is null)
+                {
+                    MessageBox.Show("Unexpected error: Application instance is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                if (app._containerViewModel is null)
+                {
+                    MessageBox.Show("Unexpected error: ContainerViewModel instance is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                app._containerViewModel.CurrentViewModel = new DashboardViewModel(user);
             }
             catch (SqlException se)
             {

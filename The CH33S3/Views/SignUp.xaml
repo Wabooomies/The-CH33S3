@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="The_CH33S3.Views.SignUp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:The_CH33S3.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="410" d:DesignWidth="800">
+    <Grid>
+        <Border Background="#FF231E38"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Text="Sign Up!" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="White" 
+                       Margin="0,20,0,10" 
+                       HorizontalAlignment="Center"/>
+                <TextBlock Text="We will never know how cheesy you'll be" 
+                       FontSize="14" 
+                       Foreground="White" 
+                       Margin="0,0,0,20" 
+                       HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Vertical"
+                        Margin="50,0,50,50">
+                    <TextBlock Text="Username" 
+                           FontSize="12"
+                           MaxWidth="500"
+                           Foreground="White" 
+                           Margin="0,10,0,5"/>
+                    <TextBox x:Name="UsernameTextBox" 
+                         Style="{DynamicResource StandardTextBoxStyle}" 
+                         Text="{Binding Username}"
+                         MaxWidth="500"
+                         FontSize="12"
+                         Margin="0,0,0,10"
+                         Padding="2.5"/>
+                    <TextBlock Text="Password" 
+                           MaxWidth="500"
+                           FontSize="12" 
+                           Foreground="White" 
+                           Margin="0,10,0,5"/>
+                    <PasswordBox Template="{DynamicResource StandardPasswordBoxStyle}" x:Name="PasswordInput" 
+                             Foreground="White"
+                             FontSize="12"
+                             MaxWidth="500"
+                             Margin="0,0,0,20"
+                             Padding="2.5"/>
+                    <Button Style="{DynamicResource StandardButtonStyle}" Content="Register" 
+                        FontWeight="Bold"
+                        FontSize="16"
+                        MaxWidth="500"
+                        Click="SignUp_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <Image Grid.Column="1"
+               MinHeight="100"
+               MinWidth="100"
+               MaxHeight="600"
+               MaxWidth="600"
+               Margin="50"
+               Source="pack://application:,,,/Images/cheese_icon.png"
+               Stretch="Uniform">
+            </Image>
+
+        </Grid>
+    </Grid>
+</UserControl>

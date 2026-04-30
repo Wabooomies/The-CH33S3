@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:The_CH33S3"
              xmlns:vm="clr-namespace:The_CH33S3.ViewModels"
              xmlns:v="clr-namespace:The_CH33S3.Views"
+             xmlns:c="clr-namespace:The_CH33S3.Controls"
              StartupUri="Views/Container.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -13,6 +14,10 @@
 
             <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
                 <v:Dashboard />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
+                <c:Profile />
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>

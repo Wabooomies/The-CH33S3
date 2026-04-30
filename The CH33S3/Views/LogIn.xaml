@@ -21,7 +21,7 @@
                            Foreground="White" 
                            Margin="0,20,0,10" 
                            HorizontalAlignment="Center"/>
-                <TextBlock Text="Please log in to your account" 
+                <TextBlock Text="We need your cheese" 
                            FontSize="14" 
                            Foreground="White" 
                            Margin="0,0,0,20" 
@@ -56,6 +56,17 @@
                             FontSize="16"
                             MaxWidth="500"
                             Click="LogIn_Click"/>
+
+                    <TextBlock FontSize="12" 
+                               Foreground="White" 
+                               Margin="0,20,0,0" 
+                               HorizontalAlignment="Center"
+                               Cursor="Hand">
+                        <Hyperlink>
+                            Don't have an account? Sign up.
+                            
+                        </Hyperlink>
+                    </TextBlock>
                 </StackPanel>
             </StackPanel>
 

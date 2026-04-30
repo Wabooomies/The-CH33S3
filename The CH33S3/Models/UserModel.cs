@@ -9,7 +9,6 @@ namespace The_CH33S3.Models
     internal class UserModel
     {
         private string? _username;
-        private string? _password;
 
         public string? Username
         {
@@ -17,16 +16,9 @@ namespace The_CH33S3.Models
             set => _username = value;
         }
 
-        public string? Password
-        {
-            protected get => _password;
-            set => _password = value;
-        }
-
-        public UserModel(string username, string password)
+        public UserModel(string username)
         {
             Username = username;
-            Password = password;
         }
     }
 }

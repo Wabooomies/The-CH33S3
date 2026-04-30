@@ -6,33 +6,44 @@
              xmlns:local="clr-namespace:The_CH33S3.Controls"
              mc:Ignorable="d"
              Background="Transparent"
-             d:DesignHeight="65" d:DesignWidth="160">
-    <Grid Background="#FF372F58">
-        <Grid.InputBindings>
-            <MouseBinding MouseAction="LeftClick" Command="{Binding OpenProfileCommand}" />
-        </Grid.InputBindings>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="65"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+             d:DesignHeight="100" d:DesignWidth="160">
+    <Grid>
+        <Border Background="#FF372F58" CornerRadius="35,35,15,15"/>
+        <Grid Background="Transparent">
+            <Grid.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding OpenProfileCommand}" />
+            </Grid.InputBindings>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Ellipse Grid.Column="0" 
-                 Width="45" 
-                 Height="45">
-            <Ellipse.Fill>
-                <ImageBrush ImageSource="{Binding ProfilePicture}"/>
-            </Ellipse.Fill>
-        </Ellipse>
+            <Ellipse x:Name="ProfilePicture"
+                     MinWidth="50"
+                     MinHeight="50"
+                     MaxWidth="200"
+                     MaxHeight="200"
+                     Margin="15"
+                     Cursor="Hand">
+                <Ellipse.InputBindings>
+                    <MouseBinding MouseAction="LeftClick"
+                                  Command="{Binding UploadImageCommand}"/>
+                </Ellipse.InputBindings>
 
-        <StackPanel Orientation="Vertical"
-                    Grid.Column="1">
-            <TextBlock VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
-                       Foreground="White"
-                       FontWeight="Bold"
-                       FontSize="20"
-                       Text="{Binding Username}"/>
-        </StackPanel>
-        
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{Binding ProfilePicture}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <StackPanel Orientation="Vertical"
+                VerticalAlignment="Center"
+                Grid.Column="1">
+                <TextBlock Foreground="White"
+                   FontSize="16"
+                   Text="{Binding User.Username}"/>
+            </StackPanel>
+
+        </Grid>
     </Grid>
+    
 </UserControl>

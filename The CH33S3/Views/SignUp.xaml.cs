@@ -12,18 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using The_CH33S3.ViewModels;
 
-namespace The_CH33S3.Controls
+namespace The_CH33S3.Views
 {
     /// <summary>
-    /// Interaction logic for Profile.xaml
+    /// Interaction logic for SignUp.xaml
     /// </summary>
-    public partial class Profile : UserControl
+    public partial class SignUp : UserControl
     {
-        public Profile()
+        public SignUp()
         {
             InitializeComponent();
+        }
 
+        private async void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SignUpViewModel vm)
+                await vm.SignUp(PasswordInput.Password);
         }
     }
 }

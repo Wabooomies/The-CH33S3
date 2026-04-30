@@ -4,31 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using The_CH33S3.Models;
 
 namespace The_CH33S3.ViewModels
 {
     internal class ProfileViewModel : BaseViewModel
     {
-        private readonly UserModel _user;
-        private string? _profilePictureUrl = null;
+        private BitmapImage? _profilePicture;
+        private UserModel? _user;
 
-        public string? ProfilePictureUrl
+        public BitmapImage? ProfilePicture
         {
-            set => SetProperty(ref _profilePictureUrl, value);
+            get => _profilePicture;
+            set => SetProperty(ref _profilePicture, value);
         }
 
-        public ICommand OpenProfileCommand { get; }
+        public UserModel? User
+        {
+            get => _user;
+            set => SetProperty(ref _user, value);
+        }
+
+
 
         public ProfileViewModel(UserModel user)
         {
-            _user = user;
-            OpenProfileCommand = new AsyncRelayCommand(OpenProfile);
-        }
-
-        private async Task OpenProfile()
-        {
-
+            User = user;
         }
     }
 }
