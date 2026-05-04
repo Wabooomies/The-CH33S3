@@ -18,14 +18,21 @@
                       CornerRadius="0" />
     </WindowChrome.WindowChrome>
 
-    <Grid>
+    <Grid Margin="5,5,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Controls:TopBar/>
+        <Grid Grid.Row="0">
+            <Controls:TopBar/>
+        </Grid>
 
-        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+        <Grid Grid.Row="1">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid>
+        
+
+        
     </Grid>
 </Window>

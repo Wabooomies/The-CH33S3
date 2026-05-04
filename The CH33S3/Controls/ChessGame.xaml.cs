@@ -10,21 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace The_CH33S3.Views
+namespace The_CH33S3.Controls
 {
     /// <summary>
-    /// Interaction logic for Container.xaml
+    /// Interaction logic for ChessGame.xaml
     /// </summary>
-    public partial class Container : Window
+    public partial class ChessGame : UserControl
     {
-        public Container()
+        public ChessGame()
         {
             InitializeComponent();
-            DataContext = ((App)Application.Current)._containerViewModel;
-            this.MaxHeight = SystemParameters.WorkArea.Height + 10;
-            this.MaxWidth = SystemParameters.WorkArea.Width + 10;
         }
     }
 }

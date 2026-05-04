@@ -8,7 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="410" d:DesignWidth="800">
     <Grid>
-        <Border Background="#FF231E38"/>
+        <Border Background="#FF231E38">
+        </Border>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
@@ -59,6 +60,9 @@
                             Command="{Binding Exit}"/>
                 </StackPanel>
                 
+            </Grid>
+            <Grid Grid.Column="1" Margin="10">
+                <Controls:ChessGame/>
             </Grid>
         </Grid>
     </Grid>

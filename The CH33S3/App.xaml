@@ -8,23 +8,14 @@
              StartupUri="Views/Container.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type vm:LogInViewModel}">
-                <v:LogIn />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
-                <v:Dashboard />
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
-                <c:Profile />
-            </DataTemplate>
+            
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/TopBarIconResource.xaml"/>
-                <ResourceDictionary Source="Themes/StandardButtonResource.xaml"/>
-                <ResourceDictionary Source="Themes/StandardTextBoxResource.xaml"/>
-                <ResourceDictionary Source="Themes/StandardPasswordBoxResource.xaml"/>
+                <ResourceDictionary Source="Resources/DataTemplates.xaml"/>
+                <ResourceDictionary Source="Resources/TopBarIconResource.xaml"/>
+                <ResourceDictionary Source="Resources/StandardButtonResource.xaml"/>
+                <ResourceDictionary Source="Resources/StandardTextBoxResource.xaml"/>
+                <ResourceDictionary Source="Resources/StandardPasswordBoxResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>

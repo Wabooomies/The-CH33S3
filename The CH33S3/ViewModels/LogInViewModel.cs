@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using The_CH33S3.Models;
 
 namespace The_CH33S3.ViewModels
@@ -22,9 +23,11 @@ namespace The_CH33S3.ViewModels
 
         private string? _password;
 
+        public ICommand RedirectToSignUpCommand { get; }
+
         public LogInViewModel()
         {
-
+            RedirectToSignUpCommand = new RelayCommand(RedirectToSignUp);
         }
 
         public async Task LogIn(string password)
@@ -69,6 +72,19 @@ namespace The_CH33S3.ViewModels
             {
                 MessageBox.Show($"Database error: {se.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void RedirectToSignUp()
+        {
+            var app = Application.Current as App;
+
+            if (app == null || app._containerViewModel is not ContainerViewModel)
+            {
+                MessageBox.Show("Unexpected error: Application instance or ContainerViewModel is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            app._containerViewModel.CurrentViewModel = new SignUpViewModel();
         }
     }
 }
