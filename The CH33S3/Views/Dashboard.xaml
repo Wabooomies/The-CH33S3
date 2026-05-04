@@ -26,6 +26,7 @@
                 <StackPanel Orientation="Vertical"
                             Margin="35"
                             Grid.Row="1">
+
                     <Controls:Profile DataContext="{Binding ProfileViewModel}"
                                       Margin="0,0,0,10"/>
 
