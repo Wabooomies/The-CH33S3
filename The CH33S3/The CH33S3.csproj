@@ -10,8 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Config\ListOfCommandStrings.csv" />
     <None Remove="Images\Cheese-Graphics-64558594-2-580x387.png" />
     <None Remove="Images\cheese_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Config\ListOfCommandStrings.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

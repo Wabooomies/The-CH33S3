@@ -13,10 +13,11 @@ namespace The_CH33S3.Models
 {
     public static class DatabaseHelper
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
+        //private static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        private static string connectionString = string.Empty;
         public static async Task<object?> FindUser(string username, string password)
         {
+            
             using (SqlConnection connection = new (connectionString))
             {
                 await connection.OpenAsync();
@@ -74,7 +75,10 @@ namespace The_CH33S3.Models
 
         public static async Task<object> FindUserCaseSensitive(string username, string password)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            (string connStr, bool working) Item = await VersatileConnectionStringHelper.GetWorkingConnectionString();
+            connectionString = Item.connStr;
+
+            using (SqlConnection connection = new SqlConnection(connectionString)) //Problem : The entry 'DefaultConnection' has already been added. (C:\Users\24-0244c\Source\Repos\The-CH33S3\The CH33S3\bin\Debug\net8.0-windows\The 
             {
                 await connection.OpenAsync();
 
@@ -103,6 +107,8 @@ namespace The_CH33S3.Models
         }
         public static async Task<bool> IsUsernameTaken(string usernameInput)
         {
+            (string connStr, bool working) Item = await VersatileConnectionStringHelper.GetWorkingConnectionString();
+            connectionString = Item.connStr;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
