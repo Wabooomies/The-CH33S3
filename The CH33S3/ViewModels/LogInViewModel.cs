@@ -41,7 +41,7 @@ namespace The_CH33S3.ViewModels
                     return;
                 }
 
-                var result = await DatabaseHelper.FindUser(Username, _password);
+                var result = await DatabaseHelper.FindUserCaseSensitive(Username, _password);
                 if (result == null)
                 {
                     MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
