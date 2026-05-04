@@ -13,11 +13,18 @@ namespace The_CH33S3.ViewModels
     {
         private Square[,] ChessBoard;
 
-        public ObservableCollection<ObservableCollection<Square>> Board { get; set; }
+        private ObservableCollection<ObservableCollection<Square>> _board;
+
+        public ObservableCollection<ObservableCollection<Square>> Board
+        {
+            get => _board;
+            set => SetProperty(ref _board, value);
+        }
 
         public ChessGameViewModel()
         {
             ChessBoard chessBoard = new ChessBoard();
+            Board = new ObservableCollection<ObservableCollection<Square>>();
             ChessBoard = chessBoard.Squares ?? new Square[8, 8];
             BuildBoardView();
         }

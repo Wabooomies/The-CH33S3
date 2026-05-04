@@ -5,18 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:The_CH33S3.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="410" d:DesignWidth="410">
+             xmlns:vm="clr-namespace:The_CH33S3.ViewModels">
+    <UserControl.DataContext>
+        <vm:ChessGameViewModel />
+    </UserControl.DataContext>
+    
     <Grid >
-        <ItemsControl ItemsSource="{Binding Squares}">
+        <ItemsControl ItemsSource="{Binding Board}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="8" Columns="8"/>
+                    <StackPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="{Binding Squares.Square.Color}" Margin="1"/>
+                    <ItemsControl ItemsSource="{Binding}"
+                                  Height="auto"
+                                  Width="auto">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding Color}" Margin="1" MinWidth="50" MinHeight="50" MaxHeight="200" MaxWidth="200">
+                                    <Image Source="{Binding Piece.ImagePath}" Margin="5"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
