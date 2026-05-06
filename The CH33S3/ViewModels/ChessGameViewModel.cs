@@ -11,11 +11,9 @@ namespace The_CH33S3.ViewModels
 {
     public class ChessGameViewModel : BaseViewModel
     {
-        private Square[,] ChessBoard;
+        private ObservableCollection<Square> _board = new ObservableCollection<Square>();
 
-        private ObservableCollection<ObservableCollection<Square>> _board;
-
-        public ObservableCollection<ObservableCollection<Square>> Board
+        public ObservableCollection<Square> Board
         {
             get => _board;
             set => SetProperty(ref _board, value);
@@ -23,26 +21,28 @@ namespace The_CH33S3.ViewModels
 
         public ChessGameViewModel()
         {
-            ChessBoard chessBoard = new ChessBoard();
-            Board = new ObservableCollection<ObservableCollection<Square>>();
-            ChessBoard = chessBoard.Squares ?? new Square[8, 8];
-            BuildBoardView();
+            InitializeGame();
         }
 
-        public void BuildBoardView()
+        private async void InitializeGame()
         {
-            Board = new ObservableCollection<ObservableCollection<Square>>();
+            ChessBoard chessBoard = new ChessBoard();
 
-            for (int i = 0; i < 8; i++)
+            await chessBoard.LoadBoardAsync();
+
+            if (chessBoard.Squares != null)
             {
-                var row = new ObservableCollection<Square>();
+                var tempBoard = new ObservableCollection<Square>();
 
-                for (int j = 0; j < 8; j++)
+                for (int i = 0; i < 8; i++)
                 {
-                    row.Add(ChessBoard[i,j]);
+                    for (int j = 0; j < 8; j++)
+                    {
+                        tempBoard.Add(chessBoard.Squares[i, j]);
+                    }
                 }
 
-                Board.Add(row);
+                Board = tempBoard;
             }
         }
     }

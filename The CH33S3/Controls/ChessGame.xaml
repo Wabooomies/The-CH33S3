@@ -4,40 +4,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:The_CH33S3.Controls"
+             xmlns:conv="clr-namespace:The_CH33S3.Converters"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:The_CH33S3.ViewModels">
     <UserControl.DataContext>
         <vm:ChessGameViewModel />
     </UserControl.DataContext>
-    
+
+    <UserControl.Resources>
+        <conv:StringToBrushConverter x:Key="StringToBrushConverter"/>
+    </UserControl.Resources>
+
     <Grid >
         <ItemsControl ItemsSource="{Binding Board}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"/>
+                    <UniformGrid Rows="8" Columns="8" Width="400" Height="400"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding}"
-                                  Height="auto"
-                                  Width="auto">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="{Binding Color}" Margin="1" MinWidth="50" MinHeight="50" MaxHeight="200" MaxWidth="200">
-                                    <Image Source="{Binding Piece.ImagePath}" Margin="5"/>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <Grid Background="{Binding Color, Converter={StaticResource StringToBrushConverter}}">
+
+                        <Border Background="{Binding Piece.Side, Converter={StaticResource StringToBrushConverter}}"
+                            Margin="4">
+                            <Border.OpacityMask>
+                                <ImageBrush ImageSource="{Binding Piece.ImagePath}" Stretch="Uniform"/>
+                            </Border.OpacityMask>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+
     </Grid>
 </UserControl>

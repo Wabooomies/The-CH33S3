@@ -11,8 +11,20 @@
 
   <ItemGroup>
     <None Remove="Config\ListOfCommandStrings.csv" />
+    <None Remove="Images\blackbishop.png" />
+    <None Remove="Images\blackking.png" />
+    <None Remove="Images\blackknight.png" />
+    <None Remove="Images\blackpawn.png" />
+    <None Remove="Images\blackqueen.png" />
+    <None Remove="Images\blackrook.png" />
     <None Remove="Images\Cheese-Graphics-64558594-2-580x387.png" />
     <None Remove="Images\cheese_icon.png" />
+    <None Remove="Images\whitebishop.png" />
+    <None Remove="Images\whiteking.png" />
+    <None Remove="Images\whiteknight.png" />
+    <None Remove="Images\whitepwan.png" />
+    <None Remove="Images\whitequeen.png" />
+    <None Remove="Images\whiterook.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,8 +38,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\blackbishop.png" />
+    <Resource Include="Images\blackking.png" />
+    <Resource Include="Images\blackknight.png" />
+    <Resource Include="Images\blackpawn.png" />
+    <Resource Include="Images\blackqueen.png" />
+    <Resource Include="Images\blackrook.png" />
     <Resource Include="Images\Cheese-Graphics-64558594-2-580x387.png" />
     <Resource Include="Images\cheese_icon.png" />
+    <Resource Include="Images\whitebishop.png" />
+    <Resource Include="Images\whiteking.png" />
+    <Resource Include="Images\whiteknight.png" />
+    <Resource Include="Images\whitepwan.png" />
+    <Resource Include="Images\whitequeen.png" />
+    <Resource Include="Images\whiterook.png" />
   </ItemGroup>
 
 </Project>

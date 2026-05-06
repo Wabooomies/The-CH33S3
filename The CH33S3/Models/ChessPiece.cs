@@ -31,6 +31,12 @@ namespace The_CH33S3.Models
             set => _imagePath = value;
         }
 
+        public string? Side
+        {
+            get => _side;
+            set => _side = value;
+        }
+
         public ChessPiece(string id, string name, string path, int side)
         {
             switch (side)

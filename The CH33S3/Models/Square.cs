@@ -11,7 +11,8 @@ namespace The_CH33S3.Models
     public class Square : INotifyPropertyChanged
     {
         private ChessPiece? _piece = null;
-        private Brush? _color;
+        private string? _color;
+        private int[] _position = new int[2];
 
         public ChessPiece? Piece
         {
@@ -26,7 +27,7 @@ namespace The_CH33S3.Models
             }
         }
 
-        public Brush? Color
+        public string? Color
         {
             get => _color;
             set
@@ -39,9 +40,23 @@ namespace The_CH33S3.Models
             }
         }
 
-        public Square(Brush color, ChessPiece? piece = null)
+        public int[] Position
+        {
+            get => _position;
+            set
+            {
+                if (_position != value)
+                {
+                    _position = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Position)));
+                }
+            }
+        }
+
+        public Square(string color, int[] position, ChessPiece? piece = null)
         {
             Color = color;
+            Position = position;
             Piece = piece;
         }
 
