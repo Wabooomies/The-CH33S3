@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq; // Added to help with parallel tasks
 using System.Threading.Tasks;
 
 namespace The_CH33S3.ViewModels
@@ -9,20 +10,6 @@ namespace The_CH33S3.ViewModels
     internal class VersatileConnectionStringHelper
     {
         static public string DateFormat = "MM-dd-yyyy h:mm:ss tt";
-        static public bool RandomizeNumber = false;
-        static public int Number = 60;
-        static public int MinRange = 60;
-        static public int MaxRange = 120;
-
-        public static int GetMinutes()
-        {
-            if (RandomizeNumber)
-            {
-                Random rnd = new Random();
-                return rnd.Next(MinRange, MaxRange + 1);
-            }
-            return MinRange;
-        }
 
         private static string _cachedConnectionString = string.Empty;
 
@@ -46,13 +33,10 @@ namespace The_CH33S3.ViewModels
                     {
                         string cleanLine = line?.Trim().Trim('"');
 
-                        // Accept ANY non-empty line
                         if (!string.IsNullOrWhiteSpace(cleanLine))
                         {
-                            // *** THE FIX: Run it through your normalizer! ***
                             string normalized = NormalizeConnectionString(cleanLine);
 
-                            // Only add it if the normalizer didn't completely empty it out
                             if (!string.IsNullOrWhiteSpace(normalized))
                             {
                                 candidates.Add(normalized);
@@ -70,48 +54,61 @@ namespace The_CH33S3.ViewModels
                 System.Diagnostics.Debug.WriteLine($"CSV Read Error: {ex.Message}");
             }
 
-            // 2. OPTIONAL: Add fallback only if CSV failed
-            /*
             if (candidates.Count == 0)
             {
-                System.Diagnostics.Debug.WriteLine("No candidates found in CSV. Using fallback.");
-
-                candidates.Add(@"Server=localhost; Database=ApiDatabase; Integrated Security=True; TrustServerCertificate=True;");
-                candidates.Add(@"Server=CCL2-13\MSSQLSERVER01; Database=DatabaseForSQL; User Id=sa; Password=ccl2; TrustServerCertificate=True;");
+                System.Diagnostics.Debug.WriteLine("No working connection string found.");
+                return (string.Empty, false);
             }
-            */
 
-            // 3. TEST CONNECTION STRINGS
-            foreach (var connString in candidates)
+            // 2. THE SPEED UP: TEST CONNECTION STRINGS IN PARALLEL
+            // This starts a connection attempt for EVERY string at the exact same time
+            var connectionTasks = candidates.Select(TryConnectAsync).ToList();
+
+            // We monitor all the tasks. As soon as ONE of them succeeds, we lock it in!
+            while (connectionTasks.Count > 0)
             {
-                try
-                {
-                    // Even though it's normalized, we still use the builder here 
-                    // so we can safely inject the 3-second timeout!
-                    var builder = new SqlConnectionStringBuilder(connString)
-                    {
-                        ConnectTimeout = 3 // Fast fail for dead servers
-                    };
+                // Wait for the fastest task to finish (whether it succeeded or failed)
+                Task<string> finishedTask = await Task.WhenAny(connectionTasks);
+                connectionTasks.Remove(finishedTask);
 
-                    using (var connection = new SqlConnection(builder.ConnectionString))
-                    {
-                        await connection.OpenAsync();
+                string result = await finishedTask;
 
-                        // SUCCESS → cache and return
-                        _cachedConnectionString = builder.ConnectionString;
-                        return (_cachedConnectionString, true);
-                    }
-                }
-                catch (Exception ex)
+                // If the result isn't null, it means it successfully connected!
+                if (!string.IsNullOrEmpty(result))
                 {
-                    System.Diagnostics.Debug.WriteLine($"Connection failed: {connString} | {ex.Message}");
-                    continue;
+                    _cachedConnectionString = result;
+                    System.Diagnostics.Debug.WriteLine("Fastest working connection locked in!");
+                    return (_cachedConnectionString, true);
                 }
             }
 
-            // 4. TOTAL FAILURE
-            System.Diagnostics.Debug.WriteLine("No working connection string found.");
+            // 3. TOTAL FAILURE
+            System.Diagnostics.Debug.WriteLine("All connection strings failed.");
             return (string.Empty, false);
+        }
+
+        /// <summary>
+        /// Helper method that attempts a single connection and returns null if it fails.
+        /// </summary>
+        private static async Task<string> TryConnectAsync(string connString)
+        {
+            try
+            {
+                var builder = new SqlConnectionStringBuilder(connString)
+                {
+                    ConnectTimeout = 3 // Fast fail for dead servers
+                };
+
+                using (var connection = new SqlConnection(builder.ConnectionString))
+                {
+                    await connection.OpenAsync();
+                    return builder.ConnectionString; // Success! Return the string.
+                }
+            }
+            catch
+            {
+                return null; // Failure! Return null so the race continues.
+            }
         }
 
         private static string NormalizeConnectionString(string input)
@@ -123,16 +120,11 @@ namespace The_CH33S3.ViewModels
 
             try
             {
-                // This will automatically parse the string and rewrite it perfectly!
-                // It changes "Data Source" to "Data Source", "Server" to "Data Source", 
-                // "Database" to "Initial Catalog", etc., ensuring absolute consistency.
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(cleaned);
                 return builder.ConnectionString;
             }
             catch
             {
-                // If the string is absolute garbage and can't be parsed at all, 
-                // just return the cleaned version and let the connection test fail later.
                 return cleaned;
             }
         }
