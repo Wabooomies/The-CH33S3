@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using The_CH33S3.Models;
+using The_CH33S3.ViewModels;
 
 namespace The_CH33S3.Controls
 {
@@ -54,10 +55,14 @@ namespace The_CH33S3.Controls
 
                 if (sourceSquare is not null && targetSquare is not null && sourceSquare != targetSquare)
                 {
-                    // Logic: Move the piece data
-                    // This triggers PropertyChanged, so the UI updates instantly
-                    targetSquare.Piece = sourceSquare.Piece;
-                    sourceSquare.Piece = null;
+                    if (MoveChecker.IslegalMove(sourceSquare, targetSquare))
+                    {
+                        // Logic: Move the piece data
+                        // This triggers PropertyChanged, so the UI updates instantly
+                        targetSquare.Piece = sourceSquare.Piece;
+                        sourceSquare.Piece.Side = null;
+                    }
+
                 }
             }
         }
