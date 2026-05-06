@@ -45,7 +45,7 @@
                            FontSize="12" 
                            Foreground="White" 
                            Margin="0,10,0,5"/>
-                    <PasswordBox Template="{DynamicResource StandardPasswordBoxStyle}" x:Name="PasswordInput" 
+                    <PasswordBox Style="{DynamicResource StandardPasswordBoxStyle}" x:Name="PasswordInput" 
                              Foreground="White"
                              FontSize="12"
                              MaxWidth="500"

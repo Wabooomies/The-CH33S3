@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="410" d:DesignWidth="800">
     <Grid>
-        <Border Background="Green">
+        <Border Background="#FF342D54">
         </Border>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -22,44 +22,65 @@
                         CornerRadius="50"/>
             </Grid>
             <Grid Grid.Column="0">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Margin="5">
 
 
-                <StackPanel Orientation="Vertical"
-                            Margin="35"
-                            Grid.Row="1">
+                    <StackPanel Orientation="Vertical"
+                                Margin="35"
+                                Grid.Row="1"
+                                ScrollViewer.CanContentScroll="True">
 
-                    <Controls:Profile DataContext="{Binding ProfileViewModel}"
-                                      Margin="0,0,0,10"/>
+                        <Controls:Profile DataContext="{Binding ProfileViewModel}"
+                                          Margin="0,0,0,10"/>
 
-                    <Button Style="{DynamicResource StandardButtonStyle}"
-                            Content="Play"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Margin="0,10,0,0"
-                            Command="{Binding Play}"/>
+                    
+                    
+                        <Button Style="{DynamicResource StandardButtonStyle}"
+                                Content="Play Game"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Margin="0,10,0,0"
+                                Command="{Binding RedirectToPlayCommand}"/>
 
-                    <Button Style="{DynamicResource StandardButtonStyle}"
-                            Content="Log Out"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Margin="0,10,0,0"
-                            Command="{Binding LogOut}"/>
+                        <Button Style="{DynamicResource StandardButtonStyle}"
+                                Content="View Games"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Margin="0,10,0,0"
+                                Command="{Binding RedirectToViewGamesCommand}"/>
 
-                    <Button Style="{DynamicResource StandardButtonStyle}"
-                            Content="Delete Account"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Margin="0,10,0,0"
-                            Command="{Binding DeleteAccount}"/>
+                        <Button Style="{DynamicResource StandardButtonStyle}"
+                                Content="View Friends"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Margin="0,10,0,0"
+                                Command="{Binding RedirectToViewFriendsCommand}"/>
 
-                    <Button Style="{DynamicResource StandardButtonStyle}"
-                            Content="Exit"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Margin="0,10,0,0"
-                            Command="{Binding Exit}"/>
-                </StackPanel>
-                
+                        <Button Style="{DynamicResource StandardButtonStyle}"
+                                Content="Log Out"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Margin="0,10,0,0"
+                                Command="{Binding LogOut}"/>
+
+                        <Button Style="{DynamicResource StandardButtonStyle}"
+        Content="Log Out"
+        FontSize="14"
+        FontWeight="Bold"
+        Margin="0,10,0,0"
+        Command="{Binding LogOut}"/>
+
+                        <Button Style="{DynamicResource StandardButtonStyle}"
+        Content="Log Out"
+        FontSize="14"
+        FontWeight="Bold"
+        Margin="0,10,0,0"
+        Command="{Binding LogOut}"/>
+                    </StackPanel>
+
+                </ScrollViewer>
             </Grid>
             <Grid Grid.Column="1" Margin="10">
                 <Controls:ChessGame/>

@@ -62,7 +62,7 @@
                                Margin="0,20,0,0" 
                                HorizontalAlignment="Center"
                                Cursor="Hand">
-                        <Hyperlink Command="{Binding RedirectToSignUp}">
+                        <Hyperlink Command="{Binding RedirectToSignUpCommand}">
                             Don't have an account? Sign up.
                             
                         </Hyperlink>

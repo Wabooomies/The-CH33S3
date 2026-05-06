@@ -15,28 +15,40 @@
         <conv:StringToBrushConverter x:Key="StringToBrushConverter"/>
     </UserControl.Resources>
 
-    <Grid >
-        <ItemsControl ItemsSource="{Binding Board}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows="8" Columns="8" Width="400" Height="400"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+    <Viewbox Stretch="Uniform">
+        <Grid >
+            <ItemsControl ItemsSource="{Binding Board}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="8" Columns="8" Width="400" Height="400"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid Background="{Binding Color, Converter={StaticResource StringToBrushConverter}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Color, Converter={StaticResource StringToBrushConverter}}" 
+                                MaxWidth="50" MaxHeight="50"
+                                AllowDrop="True" 
+                                Drop="Square_Drop"> 
 
-                        <Border Background="{Binding Piece.Side, Converter={StaticResource StringToBrushConverter}}"
-                            Margin="4">
-                            <Border.OpacityMask>
-                                <ImageBrush ImageSource="{Binding Piece.ImagePath}" Stretch="Uniform"/>
-                            </Border.OpacityMask>
+                            <Border Background="{Binding Piece.Side, Converter={StaticResource StringToBrushConverter}}" 
+                                    Margin="5"
+                                    Width="40" Height="40"
+                                    MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                                    Cursor="Hand">
+
+                                <Border.OpacityMask>
+                                    <ImageBrush ImageSource="{Binding Piece.ImagePath}" Stretch="Uniform"/>
+                                </Border.OpacityMask>
+
+                            </Border>
                         </Border>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-    </Grid>
+        </Grid>
+    </Viewbox>
+    
+    
 </UserControl>
