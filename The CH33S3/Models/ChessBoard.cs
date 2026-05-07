@@ -57,7 +57,7 @@ namespace The_CH33S3.Models
                     string name = "";
                     string imagePath = "";
                     int side = 0;
-                    int[] position = new int[2] { i, j };
+                    int[] position = { i, j };
 
                     bool isDark = (i + j) % 2 == 0;
 
@@ -122,7 +122,7 @@ namespace The_CH33S3.Models
 
                     if (i <= 1 || i >= 6)
                     {
-                        chessPiece = new ChessPiece(id, name, imagePath, side);
+                        chessPiece = new ChessPiece(id, name, imagePath, side, position);
                         square = new Square(squareColor, position, chessPiece);
                     }
                     else

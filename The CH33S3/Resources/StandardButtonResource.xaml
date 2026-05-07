@@ -9,12 +9,12 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="Button.Static.Background" Color="#FF2F2B44"/>
-    <SolidColorBrush x:Key="Button.Static.Border" Color="#FF2F2B44"/>
+    <SolidColorBrush x:Key="Button.Static.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="Button.Static.Border" Color="Transparent"/>
     <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FF494463"/>
     <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF494463"/>
     <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FF6E649E"/>
-    <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2F2B44"/>
+    <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF6E649E"/>
     <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
     <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
     <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
@@ -31,10 +31,26 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
-                            CornerRadius="5"
-                            Padding="10"
-                            Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        Padding="10"
+                        Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        SnapsToDevicePixels="true"
+                        RenderTransformOrigin="0.5,0.5">
+                        <!-- Added to scale from center -->
+
+                        <!-- 1. Define the Transform -->
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="ButtonScale" ScaleX="1" ScaleY="1" />
+                        </Border.RenderTransform>
+
+                        <ContentPresenter x:Name="contentPresenter" 
+                                      Focusable="False" 
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                      Margin="{TemplateBinding Padding}" 
+                                      RecognizesAccessKey="True" 
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsDefaulted" Value="true">
@@ -43,6 +59,33 @@
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
                             <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" 
+                                                     Storyboard.TargetProperty="ScaleX" 
+                                                     To="1.05" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" 
+                                                     Storyboard.TargetProperty="ScaleY" 
+                                                     To="1.05" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" 
+                                                     Storyboard.TargetProperty="ScaleX" 
+                                                     To="1.0" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="ButtonScale" 
+                                                     Storyboard.TargetProperty="ScaleY" 
+                                                     To="1.0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>

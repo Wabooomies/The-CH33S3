@@ -1,12 +1,23 @@
 ﻿using System;
+using System.Windows;
 using The_CH33S3.Models;
 
 namespace The_CH33S3.ViewModels
 {
     public static class MoveChecker
     {
-        public static bool IslegalMove(Square source, Square target)
+        public static bool IslegalMove(ChessGameViewModel chessInstance, Square source, Square target)
         {
+            if (chessInstance is null)
+            {
+                throw new ArgumentNullException(nameof(chessInstance), "ChessGameViewModel instance cannot be null.");
+            }
+
+            if (chessInstance.Board is null)
+            {
+                throw new InvalidOperationException("ChessGameViewModel.Board cannot be null.");
+            }
+
             // Safety Check 1: Is there actually a piece to move?
             if (source.Piece == null) return false;
 
@@ -31,11 +42,13 @@ namespace The_CH33S3.ViewModels
                     return (deltaRow == 2 && deltaCol == 1) || (deltaRow == 1 && deltaCol == 2);
 
                 case "Rook":
-                    // Rooks move in straight lines, meaning one of the coordinates doesn't change
+
+
                     return deltaRow == 0 || deltaCol == 0;
 
                 case "Bishop":
-                    // Bishops move diagonally, meaning the change in X always equals the change in Y
+
+
                     return deltaRow == deltaCol;
 
                 case "Queen":
@@ -47,15 +60,13 @@ namespace The_CH33S3.ViewModels
                     return deltaRow <= 1 && deltaCol <= 1;
 
                 case "Pawn":
-                    // Pawns are tricky because they only go FORWARD.
-                    // Based on your board setup: Side 1 is at the top (moves down, +1), Side 0 is at bottom (moves up, -1)
-                    int forwardDir = source.Piece.Side == "1" ? 1 : -1;
-                    int startingRow = source.Piece.Side == "1" ? 1 : 6;
+
+                    int forwardDir = source.Piece.Side == "Black" ? 1 : -1;
+                    int startingRow = source.Piece.Side == "Black" ? 1 : 6;
 
                     // Moving straight forward (can't capture straight forward)
                     if (deltaCol == 0 && target.Piece == null)
                     {
-                        // 1 step forward
                         if (endRow - startRow == forwardDir) return true;
 
                         // 2 steps forward (only from starting line)
@@ -66,6 +77,8 @@ namespace The_CH33S3.ViewModels
                     {
                         return true;
                     }
+
+
                     return false;
 
                 default:

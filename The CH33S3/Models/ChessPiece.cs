@@ -12,6 +12,7 @@ namespace The_CH33S3.Models
         private string? _name;
         private string? _imagePath;
         private string? _side;
+        private int[] position = new int[2];
 
         public string? Id
         {
@@ -37,7 +38,13 @@ namespace The_CH33S3.Models
             set => _side = value;
         }
 
-        public ChessPiece(string id, string name, string path, int side)
+        public int[] Position
+        {
+            get => position;
+            set => position = value;
+        }
+
+        public ChessPiece(string id, string name, string path, int side, int[] position)
         {
             switch (side)
             {
@@ -54,6 +61,7 @@ namespace The_CH33S3.Models
             Id = id;
             Name = name;
             ImagePath = path;
+            Position = position;
         }
 
         public ChessPiece()

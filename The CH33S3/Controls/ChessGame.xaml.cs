@@ -53,14 +53,22 @@ namespace The_CH33S3.Controls
                 // Get the Square we dropped ONTO (the Border's DataContext)
                 var targetSquare = (sender as Border)?.DataContext as Square;
 
+                ChessGameViewModel viewModel = this.DataContext as ChessGameViewModel;
+
+                if (viewModel is null)
+                {
+                    MessageBox.Show("ViewModel is not set. Cannot perform move.");
+                    return;
+                }
+
                 if (sourceSquare is not null && targetSquare is not null && sourceSquare != targetSquare)
                 {
-                    if (MoveChecker.IslegalMove(sourceSquare, targetSquare))
+                    if (MoveChecker.IslegalMove(viewModel, sourceSquare, targetSquare))
                     {
                         // Logic: Move the piece data
                         // This triggers PropertyChanged, so the UI updates instantly
                         targetSquare.Piece = sourceSquare.Piece;
-                        sourceSquare.Piece.Side = null;
+                        sourceSquare.Piece = null;
                     }
 
                 }
