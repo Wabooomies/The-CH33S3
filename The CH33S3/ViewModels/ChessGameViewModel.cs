@@ -19,6 +19,9 @@ namespace The_CH33S3.ViewModels
             set => SetProperty(ref _board, value);
         }
 
+        // ---> CHANGED: Now we just save the exact coordinates [Row, Col]
+        public int[] EnPassantTargetCoords { get; set; }
+
         public ChessGameViewModel()
         {
             InitializeGame();
