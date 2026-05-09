@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -77,7 +78,11 @@ namespace The_CH33S3.Models
         {
             (string connStr, bool working) Item = await VersatileConnectionStringHelper.GetWorkingConnectionString();
             connectionString = Item.connStr;
+            if (connectionString == null)
+            {
+                Debug.WriteLine("Unable to find connection string");
 
+            }
             using (SqlConnection connection = new SqlConnection(connectionString)) //Problem : The entry 'DefaultConnection' has already been added. (C:\Users\24-0244c\Source\Repos\The-CH33S3\The CH33S3\bin\Debug\net8.0-windows\The 
             {
                 await connection.OpenAsync();
