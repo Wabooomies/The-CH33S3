@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Diagnostics; // Required for Stopwatch and Debug
 
 namespace The_CH33S3.Models
 {
@@ -30,7 +31,19 @@ namespace The_CH33S3.Models
 
         public async Task LoadBoardAsync()
         {
+            // ---> 1. START THE TIMER <---
+            Stopwatch timer = Stopwatch.StartNew();
+
+            // This is the code we are testing
             _squares = await Task.Run(() => InitializeBoard());
+
+            // ---> 2. STOP THE TIMER <---
+            timer.Stop();
+
+            // ---> 3. PRINT THE RESULT <---
+            Debug.WriteLine($"\n=======================================================");
+            Debug.WriteLine($"[PERFORMANCE TEST] Board loaded in: {timer.ElapsedMilliseconds} milliseconds!");
+            Debug.WriteLine($"=======================================================\n");
         }
 
         private Square[,] InitializeBoard()
