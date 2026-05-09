@@ -1,4 +1,4 @@
 ﻿Data Source=CCL2-13\mssqlserver01;Initial Catalog=CH33S3;User ID=sa;Password=ccl2;Encrypt=True;TrustServerCertificate=True
 Data Source=CCL2-28;Initial Catalog=CH33S3;User ID=sa;Password=ccl2;Encrypt=True;TrustServerCertificate=True
-
+Data Source=localhost; Initial Catalog=CH33S3; Encrypt=True; TrustServerCertificate=True
 Luis wiener
